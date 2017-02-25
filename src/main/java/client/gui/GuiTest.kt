@@ -62,7 +62,7 @@ class GuiTest {
         pressEnterOnTextBox()
         // com.nhaarman.mockito_kotlin.whenever(mockClient.sendMessage("Test Message 1")).then { com.nhaarman.mockito_kotlin.doReturn() }
 
-        verify(mockClient).sendMessage("This is a message.")
+        verify(mockClient).sendMessage("Test Message 1")
         clickSendButton()
     }
 
@@ -114,9 +114,15 @@ class GuiTest {
     }
 
     fun pressEnterOnTextBox() {
+        val KEY_PRESS_TIME : Long = 10
+        val NO_MODIFIERS : Int = 0
         val textField = getChildNamed(gui.INPUT_TEXT_FIELD_NAME, mainFrame)
         if (textField is JTextField) {
-            textField.
+            val keyEventPressed = KeyEvent(textField, KeyEvent.KEY_PRESSED, KEY_PRESS_TIME, NO_MODIFIERS, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED)
+            val keyEventReleased = KeyEvent(textField, KeyEvent.KEY_RELEASED, KEY_PRESS_TIME, NO_MODIFIERS, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED)
+
+            textField.dispatchEvent(keyEventPressed)
+            textField.dispatchEvent(keyEventReleased)
 
         }
     }
