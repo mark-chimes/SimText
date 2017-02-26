@@ -5,14 +5,23 @@ import javax.swing.*
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import java.awt.*
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
-import java.awt.event.KeyEvent
 import java.awt.event.KeyEvent.VK_ENTER
-import java.awt.event.KeyListener
 import org.mockito.ArgumentCaptor
 import java.awt.GridBagConstraints
 import javax.swing.JButton
+import com.sun.awt.SecurityWarning.getSize
+import javax.swing.Spring.height
+import javax.swing.Spring.width
+import java.awt.Toolkit.getDefaultToolkit
+import java.awt.Dimension
+import java.awt.event.*
+import java.io.File
+import java.net.URL
+import javax.swing.ImageIcon
+
+
+
+
 
 
 
@@ -29,7 +38,8 @@ class Gui {
     val SEND_BUTTON_NAME = "sendButton"
     val INPUT_TEXT_FIELD_NAME = "inputTextField"
     val OUTPUT_TEXT_AREA_NAME = "outputTextArea"
-
+    val outputTextArea = JTextArea("My Lilley \n" + "is the most beautiful \n" + "most wonderful \n" +
+                    "best girlfriend \n" + "in the world. \n" + "and I love her!\n")
 
 
     var isStarted : Boolean = false ; private set
@@ -46,9 +56,9 @@ class Gui {
         val frameLayout = GridBagLayout()
         frame.layout = frameLayout
 
-        val outputTextArea = JTextArea("Output text area \n My output text area")
         outputTextArea.name = OUTPUT_TEXT_AREA_NAME
         outputTextArea.isEditable = false
+        outputTextArea.caret.isSelectionVisible = true
         val outputTextAreaConstraints = GridBagConstraints()
         outputTextAreaConstraints.fill = GridBagConstraints.HORIZONTAL
         outputTextAreaConstraints.gridx = 0
@@ -58,7 +68,7 @@ class Gui {
         outputTextAreaConstraints.ipady = 1000
         frame.add(outputTextArea, outputTextAreaConstraints)
 
-        val inputTextField = InputTextField(initialContent="Input Text Field", name=INPUT_TEXT_FIELD_NAME)
+        val inputTextField = InputTextField(initialContent="I Love my Lilley", name=INPUT_TEXT_FIELD_NAME)
         val inputTextFieldConstraints = GridBagConstraints()
         inputTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL
         inputTextFieldConstraints.gridx = 0
@@ -77,7 +87,11 @@ class Gui {
         frame.add(sendButton, sendButtonConstraints)
         frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
 
-        frame.setSize(400, 500)
+        frame.setSize(800, 600)
+        frame.setLocationRelativeTo(null)
+
+        val img = ImageIcon("icons/three-people-glasses-middle.png", "game icon")
+        frame.iconImage = img.image
         frame.isVisible = true
 
         isStarted = true
@@ -93,10 +107,11 @@ class Gui {
 
         init {
             textField.name = name
-            addKeyListener()
+            sendMessageOnEnterPressed()
+            ensureTextBoxIsFocussed()
         }
 
-        fun addKeyListener() {
+        fun sendMessageOnEnterPressed() {
             textField.addKeyListener(
                     object : KeyListener {
                         override fun keyTyped(e: KeyEvent?) = Unit
@@ -112,10 +127,26 @@ class Gui {
                     })
         }
 
-        fun sendContainingText() {
-            guiClient.sendMessage(textField.text);
-            textField.text = ""
+        fun ensureTextBoxIsFocussed() {
+            frame.addWindowListener(
+                    object : WindowAdapter() {
+                        override fun windowOpened(e : WindowEvent){
+                            textField.requestFocus()
+                }
+            })
         }
+
+
+        fun sendContainingText() {
+            val newText : String = textField.text
+            if (newText != "") {
+                guiClient.sendMessage(newText)
+                outputTextArea.append(newText + "\n")
+                textField.text = ""
+            }
+        }
+
+
     }
 }
 
