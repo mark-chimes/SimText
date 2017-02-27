@@ -30,24 +30,21 @@ import javax.swing.ImageIcon
 /**
  * Created by Mark Chimes on 2017/02/19.
  */
-class Gui {
-    val guiClient: Client
+class Gui(client: Client) {
+    val guiClient: Client = client
     lateinit var frame : JFrame ; private set
 
     val MAIN_WINDOW_NAME = "mainWindow"
     val SEND_BUTTON_NAME = "sendButton"
     val INPUT_TEXT_FIELD_NAME = "inputTextField"
     val OUTPUT_TEXT_AREA_NAME = "outputTextArea"
-    val outputTextArea = JTextArea("My Lilley \n" + "is the most beautiful \n" + "most wonderful \n" +
-                    "best girlfriend \n" + "in the world. \n" + "and I love her!\n")
+    val outputTextArea = JTextArea("")
 
-
-    var isStarted : Boolean = false ; private set
-
-    constructor(client : Client) {
-        this.guiClient = client
+    init {
         makeGui()
     }
+
+    var isStarted : Boolean = false ; private set
 
     fun makeGui() {
         frame = JFrame()
@@ -68,7 +65,7 @@ class Gui {
         outputTextAreaConstraints.ipady = 1000
         frame.add(outputTextArea, outputTextAreaConstraints)
 
-        val inputTextField = InputTextField(initialContent="I Love my Lilley", name=INPUT_TEXT_FIELD_NAME)
+        val inputTextField = InputTextField(initialContent="", name=INPUT_TEXT_FIELD_NAME)
         val inputTextFieldConstraints = GridBagConstraints()
         inputTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL
         inputTextFieldConstraints.gridx = 0
