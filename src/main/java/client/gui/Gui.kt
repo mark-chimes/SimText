@@ -1,6 +1,5 @@
 package client.gui
 
-import client.base.Client
 import javax.swing.*
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -10,29 +9,21 @@ import org.mockito.ArgumentCaptor
 import java.awt.GridBagConstraints
 import javax.swing.JButton
 import com.sun.awt.SecurityWarning.getSize
+import main.java.client.base.CommandConsumer
 import javax.swing.Spring.height
 import javax.swing.Spring.width
 import java.awt.Toolkit.getDefaultToolkit
 import java.awt.Dimension
 import java.awt.event.*
-import java.io.File
-import java.net.URL
 import javax.swing.ImageIcon
-
-
-
-
-
-
-
 
 
 /**
  * Created by Mark Chimes on 2017/02/19.
  */
-class Gui(client: Client) {
-    val guiClient: Client = client
-    lateinit var frame : JFrame ; private set
+class Gui(inputReceiver: CommandConsumer) {
+    val inputReceiver: CommandConsumer = inputReceiver
+    lateinit var frame: JFrame; private set
 
     val MAIN_WINDOW_NAME = "mainWindow"
     val SEND_BUTTON_NAME = "sendButton"
@@ -115,11 +106,12 @@ class Gui(client: Client) {
 
                         override fun keyPressed(e: KeyEvent?) {
                             if (e != null) {
-                                if(e.keyCode == VK_ENTER) {
+                                if (e.keyCode == VK_ENTER) {
                                     sendContainingText()
                                 }
                             }
                         }
+
                         override fun keyReleased(e: KeyEvent?) = Unit
                     })
         }
@@ -137,7 +129,7 @@ class Gui(client: Client) {
         fun sendContainingText() {
             val newText : String = textField.text
             if (newText != "") {
-                guiClient.sendMessage(newText)
+                inputReceiver.sendMessage(newText)
                 outputTextArea.append(newText + "\n")
                 textField.text = ""
             }
@@ -146,15 +138,3 @@ class Gui(client: Client) {
 
     }
 }
-
-fun main(args : Array<String>) {
-    val client =  PrintingClient()
-    Gui(client)
-}
-
-class PrintingClient : Client() {
-    override fun sendMessage(message: String) {
-        println(message)
-    }
-}
-

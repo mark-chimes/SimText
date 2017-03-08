@@ -1,15 +1,15 @@
 package tests
 
-import client.base.Client
+import main.java.client.base.CommandConsumer
 
 class GuiRunner {
-    val client : Client
+    val client: CommandConsumer
 
-    constructor(client: Client) {
+    constructor(client: CommandConsumer) {
         this.client = client
     }
 
-    fun  guiIsRunning(): Boolean {
+    fun guiIsRunning(): Boolean {
         return true
     }
 

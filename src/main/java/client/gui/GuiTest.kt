@@ -1,11 +1,10 @@
 package client.gui
-
-import client.base.Client
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import junit.framework.TestCase.*
+import main.java.client.base.CommandConsumer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -21,19 +20,17 @@ import javax.swing.*
 
 @DisplayName("After the gui has been set up")
 class GuiTest {
-    lateinit var gui : Gui
-    lateinit var mockClient : Client
-    lateinit var mainFrame : JFrame
+    lateinit var gui: Gui
+    lateinit var mockInputReceiver: CommandConsumer
+    lateinit var mainFrame: JFrame
 
-    @BeforeEach fun setupGui()
-    {
-        mockClient = mock()
-        gui = Gui(mockClient)
+    @BeforeEach fun setupGui() {
+        mockInputReceiver = mock()
+        gui = Gui(mockInputReceiver)
         mainFrame = gui.frame
     }
 
-    @AfterEach fun breakDownGui()
-    {
+    @AfterEach fun breakDownGui() {
         gui.killGui()
     }
 
@@ -62,11 +59,11 @@ class GuiTest {
         pressEnterOnTextBox()
         // com.nhaarman.mockito_kotlin.whenever(mockClient.sendMessage("Test Message 1")).then { com.nhaarman.mockito_kotlin.doReturn() }
 
-        verify(mockClient).sendMessage("Test Message 1")
+        verify(mockInputReceiver).sendMessage("Test Message 1")
         clickSendButton()
     }
 
-    private fun typeMessage(message : String) {
+    private fun typeMessage(message: String) {
         val textField = getChildNamed(gui.INPUT_TEXT_FIELD_NAME, mainFrame)
 
         if (textField is JTextField) {
@@ -83,7 +80,7 @@ class GuiTest {
     }
 
     fun getChildNamed(name: String): Component {
-        val component : Component? = getChildNamed(gui.MAIN_WINDOW_NAME, mainFrame)
+        val component: Component? = getChildNamed(gui.MAIN_WINDOW_NAME, mainFrame)
         if (component == null) {
             throw Exception("Widget '${name}' null")
         } else {
@@ -91,7 +88,7 @@ class GuiTest {
         }
     }
 
-    fun getChildNamed(name : String, container : Container) : Component? {
+    fun getChildNamed(name: String, container: Container): Component? {
         if (name == container.name) {
             return container
         }
@@ -108,14 +105,14 @@ class GuiTest {
         return null
     }
 
-    fun textFieldContains(message : String) : Boolean {
+    fun textFieldContains(message: String): Boolean {
         val textField = getChildNamed(gui.INPUT_TEXT_FIELD_NAME, mainFrame)
         return (textField is JTextField) && (textField.text == message)
     }
 
     fun pressEnterOnTextBox() {
-        val KEY_PRESS_TIME : Long = 10
-        val NO_MODIFIERS : Int = 0
+        val KEY_PRESS_TIME: Long = 10
+        val NO_MODIFIERS: Int = 0
         val textField = getChildNamed(gui.INPUT_TEXT_FIELD_NAME, mainFrame)
         if (textField is JTextField) {
             val keyEventPressed = KeyEvent(textField, KeyEvent.KEY_PRESSED, KEY_PRESS_TIME, NO_MODIFIERS, KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED)

@@ -1,15 +1,12 @@
 package client.base
 
+import main.java.client.base.CommandConsumer
+
 /**
  * Created by Mark Chimes on 2017/02/19.
  */
-open class Client {
-    open fun sendMessage(message : String) {
+class Client : CommandConsumer {
+    override fun sendMessage(message : String) {
 
     }
-}
-
-
-fun main(args : Array<String>){
-    // TODO
 }
