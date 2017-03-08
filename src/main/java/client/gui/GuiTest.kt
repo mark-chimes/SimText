@@ -82,7 +82,7 @@ class GuiTest {
     fun getChildNamed(name: String): Component {
         val component: Component? = getChildNamed(gui.MAIN_WINDOW_NAME, mainFrame)
         if (component == null) {
-            throw Exception("Widget '${name}' null")
+            throw Exception("Widget '$name' null")
         } else {
             return component
         }

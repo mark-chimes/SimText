@@ -125,7 +125,6 @@ class Gui(inputReceiver: CommandConsumer) {
             })
         }
 
-
         fun sendContainingText() {
             val newText : String = textField.text
             if (newText != "") {
@@ -134,7 +133,17 @@ class Gui(inputReceiver: CommandConsumer) {
                 textField.text = ""
             }
         }
+    }
 
+    class CommandPrinter : CommandConsumer {
+        override fun sendMessage(message: String) {
+            print(message)
+        }
 
     }
+}
+
+fun main(args : Array<String>) {
+    val printer = Gui.CommandPrinter()
+    Gui(printer)
 }
