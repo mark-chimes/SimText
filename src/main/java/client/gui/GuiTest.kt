@@ -57,7 +57,6 @@ class GuiTest {
     @Test fun sendMessageTest() {
         typeMessage("Test Message 1")
         pressEnterOnTextBox()
-        // com.nhaarman.mockito_kotlin.whenever(mockClient.sendMessage("Test Message 1")).then { com.nhaarman.mockito_kotlin.doReturn() }
 
         verify(mockInputReceiver).sendMessage("Test Message 1")
         clickSendButton()
