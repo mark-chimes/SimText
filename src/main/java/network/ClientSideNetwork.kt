@@ -1,7 +1,8 @@
 package main.java.network
 
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.net.Socket
-import com.sun.xml.internal.ws.streaming.XMLStreamWriterUtil.getOutputStream
 import java.io.PrintWriter
 
 
@@ -11,24 +12,35 @@ import java.io.PrintWriter
  * Created by Mark Chimes on 2017/03/11.
  */
 
-class ClientSideNetwork() {
+class ClientSideNetwork {
+    fun connectToHost(hostAddress: String, port : Int) {
+        var socket : Socket? = null
+        try {
+            val socket = Socket(hostAddress, port)
+            println("Connected: " + socket.isConnected + " to address ${socket.remoteSocketAddress}")
+            val writer = PrintWriter(socket.getOutputStream(), true)
+            val reader = BufferedReader(InputStreamReader(socket.getInputStream()))
 
-    fun connectToHost() {
-
+            for (i in 1..6) {
+                println("Writing: Potato: " + socket.localPort + " " + i)
+                writer.write("Potato: " + socket.localPort + " " + i + "\n")
+                writer.flush()
+                println("Reading incoming: " + socket.localPort + " " + i)
+                val inMessage = reader.readLine()
+                println("read message: " + inMessage)
+                Thread.sleep(1000)
+            }
+        } finally {
+            socket?.close()
+        }
     }
+
 
 }
 
 fun main(args : Array<String>) {
-    val socket = Socket("10.0.0.174", 1234)
-    println("Connected: " + socket.isConnected)
-    val out = PrintWriter(socket.getOutputStream(), true)
+    val network  = ClientSideNetwork()
+    network.connectToHost("10.0.0.174", 1234)
 
-    for (i in 1..6) {
-        println("Writing: Potato: " + socket.localPort + " " + i)
-        out.write("Potato: " + socket.localPort + " " + i + "\n")
-        out.flush()
-        Thread.sleep(1000)
-    }
-    socket.close()
+
 }
