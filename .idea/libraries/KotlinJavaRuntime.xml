@@ -7,6 +7,8 @@
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/lib/kotlin-runtime-sources.jar!/" />
+      <root url="file://$PROJECT_DIR$/../Libraries/protobuf-java-3.2.0/protobuf-3.2.0/java/core/src/main/java" />
+      <root url="file://$PROJECT_DIR$/../Libraries/protobuf-java-3.2.0/protobuf-3.2.0/java/core/src/test/java" />
     </SOURCES>
   </library>
 </component>
