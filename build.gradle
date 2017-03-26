@@ -20,6 +20,7 @@ apply plugin: 'groovy'
 apply plugin: 'kotlin'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'application'
+apply plugin: 'idea'
 
 mainClassName = "client.gui.GuiKt"
 
@@ -27,7 +28,10 @@ sourceCompatibility = 1.8
 
 repositories {
     jcenter()
+    mavenLocal()
 }
+
+def grpcVersion = '1.2.0' // CURRENT_GRPC_VERSION
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
@@ -42,18 +46,38 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+/*
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/grpc/proto'
+        }
+
+        java {
+            srcDirs 'src/main/java', 'generated-sources/main/java'
+        }
+    }
+}
+*/
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.0.2"
     }
+
     plugins {
         grpc {
             artifact = 'io.grpc:protoc-gen-grpc-java:1.2.0'
         }
     }
+
     generateProtoTasks {
-        all()*.plugins {
-            grpc {}
+        all().each { task ->
+            task.plugins {
+                grpc {
+                    option 'enable_deprecated=false'
+                }
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package main.java.grpc.proto;
-option java_package = "main.java.grpc.proto";
+package main.grpc.proto;
+option java_package = "main.grpc.proto";
 option java_outer_classname = "CommandProtos";
 
 message Command {

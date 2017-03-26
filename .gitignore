@@ -7,3 +7,5 @@ src/.gradle/
 src/extracted-include-protos/
 gradle/
 src/tmp/
+src/main/grpc/proto/CommandProtos.java
+src/main/java/grpc/proto/CommandProtos.java

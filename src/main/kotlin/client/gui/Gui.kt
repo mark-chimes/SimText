@@ -22,7 +22,7 @@ import javax.swing.ImageIcon
  */
 class Gui(inputReceiver: CommandConsumer) {
     val inputReceiver: CommandConsumer = inputReceiver
-    lateinit var frame: JFrame; private set
+    lateinit var frame: JFrame ; private set
 
     val MAIN_WINDOW_NAME = "mainWindow"
     val SEND_BUTTON_NAME = "sendButton"
@@ -61,7 +61,6 @@ class Gui(inputReceiver: CommandConsumer) {
         inputTextFieldConstraints.gridx = 0
         inputTextFieldConstraints.gridy = 1
         frame.add(inputTextField.textField, inputTextFieldConstraints)
-
 
         val sendButton = JButton("send")
         sendButton.name = SEND_BUTTON_NAME
