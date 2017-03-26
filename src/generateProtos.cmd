@@ -1,1 +1,1 @@
-protoc --proto_path=. --java_out=%cd% main/java/grpc/proto/command.proto
+protoc --proto_path=. --java_out=%cd% main/grpc/proto/command.proto
