@@ -3,7 +3,6 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import junit.framework.TestCase.*
 import main.java.client.base.CommandConsumer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach

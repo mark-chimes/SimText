@@ -1,6 +1,5 @@
 package client.base
 import com.nhaarman.mockito_kotlin.*
-import junit.framework.TestCase.*
 import main.java.client.base.CommandConsumer
 import main.java.network.NetworkConnection
 import main.java.network.NetworkPacket
@@ -26,11 +25,8 @@ class ServerTest {
 
 
         @Test fun serverCanInterpretShutdownCommandTest() {
-            val commandProducer : CommandProducer = mock()
+            val commandProducer: CommandProducer = mock()
             whenever(commandProducer.getNextCommand()).thenReturn(Command("exit"))
-
-
-
         }
     }
 }

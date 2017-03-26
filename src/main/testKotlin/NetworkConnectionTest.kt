@@ -1,7 +1,6 @@
 package main.java.network
 import org.junit.jupiter.api.*
 import com.nhaarman.mockito_kotlin.*
-import junit.framework.TestCase.*
 
 
 /**
