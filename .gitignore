@@ -1,3 +1,9 @@
 /bin/
 .idea/workspace.xml
 Simtext.iml
+build/
+src/.gradle/
+.gradle/
+src/extracted-include-protos/
+gradle/
+src/tmp/
