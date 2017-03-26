@@ -17,7 +17,6 @@ import java.awt.Dimension
 import java.awt.event.*
 import javax.swing.ImageIcon
 
-
 /**
  * Created by Mark Chimes on 2017/02/19.
  */
@@ -84,7 +83,6 @@ class Gui(inputReceiver: CommandConsumer) {
 
         isStarted = true
     }
-
 
     fun killGui() {
         frame.dispose()
